@@ -1,0 +1,10 @@
+module assert_router_arbiter(input logic clock, reset_n, input logic [15:0] request, grant);
+
+
+//Lab4 - Task 3 Step 2 - Bind an instance of the assert_arbiter module to port 0. 
+//ToDo
+
+
+//Lab4 - Task 5 Step 2 - Change bind to a macro and create 16 instances - one for each port.
+//ToDo
+endmodule

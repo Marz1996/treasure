@@ -1,0 +1,79 @@
+module assert_router_inputs(input bit frame_n, input bit valid_n, input bit din, input clock, input reset_n);
+parameter iport_no = 0;
+
+//assert that the input protocol is correct - valid and din should be high during pad bits
+property valid_high_during_pad(fr_n, vld_n, data);
+	@(posedge clock) $fell(fr_n) |-> ##4 (vld_n && data) [*5];
+endproperty
+
+a_vld_hi_in_pad: assert property ( disable iff(!reset_n) valid_high_during_pad(frame_n, valid_n, din))
+else
+begin
+	$display("[FATAL]%m: Incorrect input protocol detected on port %d at %t",iport_no, $realtime);
+	$fatal;
+end
+
+endmodule //assert_router_inputs
+
+module assert_router_outputs(input bit frameo_n, input bit valido_n, input clock, input reset_n);
+parameter oport_no = 0;
+bit [2:0] byte_cntr = 0;
+
+task automatic protocol_error_handler(string msg);
+begin
+	$display("[ERROR]%t Port %0d: %s",$realtime, oport_no, msg);
+end
+endtask
+
+//increment a byte alignment counter
+//This will not increment on last bit of packet so count checked in sequence is 7
+always@(posedge clock) begin: byte_counter
+if(!reset_n) byte_cntr = 0;
+else if(!frameo_n && !valido_n) byte_cntr++;
+end: byte_counter
+
+//sequence for frame toggling from low to high.
+sequence s_frame;
+	$fell(frameo_n) ##1 $rose(frameo_n) [->1] ;
+endsequence
+
+//only so many bits allowed in payload
+sequence valid_no_of_bits;
+	!(valido_n)[->16:24];
+endsequence
+
+//property for protocol check using sequence and check for byte alignment
+property p_vld_lo_on_rsng_frm;
+	@(posedge clock) disable iff(!reset_n) s_frame |-> !(valido_n) && (byte_cntr == 7) ;
+endproperty
+
+//property for checking payload size within range
+property p_vld_no_of_bits;
+	@(posedge clock) disable iff(!reset_n) $fell(frameo_n) |-> valid_no_of_bits intersect s_frame;
+endproperty
+
+a_vld_no_bits: assert property (p_vld_no_of_bits)
+						else begin
+							protocol_error_handler("Payload not within legal range");
+							$error;
+						end
+
+
+//assert protocol check with action block (on success resets byte_cntr)
+a_vld_lo_rsng_frm: assert property (p_vld_lo_on_rsng_frm)
+						//success action block
+						begin
+							$display("%t: End of frame successfully checked", $realtime);
+							byte_cntr=0;
+						end else //failure action block
+						begin
+							protocol_error_handler("Incorrect output protocol detected");
+							$fatal;
+						end
+
+
+endmodule //assert_router_outputs
+
+//Use a bind statement to bind the assertion module to signals of the DUT
+bind router_test_top.dut assert_router_outputs #(.oport_no(7)) assrt_op_7 (frameo_n[7], valido_n[7], clock, reset_n);
+bind router_test_top.dut assert_router_inputs #(.iport_no(3)) assrt_in_3 (frame_n[3], valid_n[3], din[3], clock, reset_n);
