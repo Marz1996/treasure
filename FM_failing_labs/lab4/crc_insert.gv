@@ -1,0 +1,135 @@
+
+module DFF_0 ( d, clk, clrn, prn, q );
+  input d, clk, clrn, prn;
+  output q;
+
+
+  fd1a2 q_reg ( .D(d), .CLK(clk), .Q(q) );
+endmodule
+
+
+module DFF_1 ( d, clk, clrn, prn, q );
+  input d, clk, clrn, prn;
+  output q;
+
+
+  fd1a2 q_reg ( .D(d), .CLK(clk), .Q(q) );
+endmodule
+
+
+module DFF_2 ( d, clk, clrn, prn, q );
+  input d, clk, clrn, prn;
+  output q;
+
+
+  fd1a2 q_reg ( .D(d), .CLK(clk), .Q(q) );
+endmodule
+
+
+module DFF_3 ( d, clk, clrn, prn, q );
+  input d, clk, clrn, prn;
+  output q;
+
+
+  fd1a2 q_reg ( .D(d), .CLK(clk), .Q(q) );
+endmodule
+
+
+module CRC_4 ( indata, clk, reset, checksum );
+  output [3:0] checksum;
+  input indata, clk, reset;
+  wire   feedback, x0, n1, n2, n3;
+
+  DFF_0 S0 ( .d(feedback), .clk(clk), .clrn(n3), .prn(n3), .q(checksum[3]) );
+  DFF_3 S1 ( .d(x0), .clk(clk), .clrn(n3), .prn(n3), .q(checksum[2]) );
+  DFF_2 S2 ( .d(checksum[2]), .clk(clk), .clrn(n3), .prn(n3), .q(checksum[1])
+         );
+  DFF_1 S3 ( .d(checksum[1]), .clk(clk), .clrn(n3), .prn(n3), .q(checksum[0])
+         );
+  inv1a0 U2 ( .A(checksum[3]), .Y(n2) );
+  inv1a0 U3 ( .A(checksum[0]), .Y(n1) );
+  vdd U4 ( .Y(n3) );
+  mx2d0 U5 ( .D0(n1), .D1(checksum[0]), .S(indata), .Y(feedback) );
+  mx2d0 U6 ( .D0(n2), .D1(checksum[3]), .S(feedback), .Y(x0) );
+endmodule
+
+
+module crc_insert ( data_fas, clk, start_frm, reset_all, zero_bit, bit_count, 
+        frame_count, reset_crc4, outdata );
+  output [7:0] bit_count;
+  output [3:0] frame_count;
+  input data_fas, clk, start_frm, reset_all;
+  output zero_bit, reset_crc4, outdata;
+  wire   st2, N9, N10, N11, N12, N13, N14, N15, N16, N19, N20, N21, crcbit,
+         N90, N92, n1, n2, n3, n4, n5, n6, n10, n20, n21, n22, n23, n24, n25,
+         n26, n27, n28, n29, n30, n31, n32, n33, n34, n35, n36;
+  wire   [3:0] temp_reg;
+  wire   [3:0] reg_crc;
+
+  CRC_4 crc_block ( .indata(data_fas), .clk(clk), .reset(reset_crc4), 
+        .checksum(temp_reg) );
+  fd1b2 outdata_reg ( .D(N92), .CLK(clk), .Q(outdata) );
+  fd1a2 st2_reg ( .D(start_frm), .CLK(clk), .Q(st2) );
+  fde1a2 reg_crc_reg_3_ ( .D(temp_reg[3]), .E(n10), .CLK(start_frm), .Q(
+        reg_crc[3]) );
+  fde1a2 reg_crc_reg_1_ ( .D(temp_reg[1]), .E(n10), .CLK(start_frm), .Q(
+        reg_crc[1]) );
+  fde1a2 reg_crc_reg_0_ ( .D(temp_reg[0]), .E(n10), .CLK(start_frm), .Q(
+        reg_crc[0]) );
+  fde1a2 reg_crc_reg_2_ ( .D(temp_reg[2]), .E(n10), .CLK(start_frm), .Q(
+        reg_crc[2]) );
+  fd1a2 crcbit_reg ( .D(N90), .CLK(start_frm), .Q(crcbit) );
+  fd2a2 bitcntr_reg_5_ ( .D(N14), .CLK(clk), .CLR(n6), .Q(bit_count[5]) );
+  fd2a2 bitcntr_reg_3_ ( .D(N12), .CLK(clk), .CLR(n6), .Q(bit_count[3]) );
+  fd2c2 frmcntr_reg_3_ ( .D(N21), .CLK(start_frm), .CLR(n4), .QN(n1) );
+  fd2a2 bitcntr_reg_1_ ( .D(N10), .CLK(clk), .CLR(n6), .Q(bit_count[1]) );
+  fd2a2 bitcntr_reg_6_ ( .D(N15), .CLK(clk), .CLR(n6), .Q(bit_count[6]) );
+  fd2a2 bitcntr_reg_4_ ( .D(N13), .CLK(clk), .CLR(n6), .Q(bit_count[4]) );
+  fd2a2 bitcntr_reg_2_ ( .D(N11), .CLK(clk), .CLR(n6), .Q(bit_count[2]) );
+  fd2c2 frmcntr_reg_1_ ( .D(N19), .CLK(start_frm), .CLR(n4), .QN(n3) );
+  fd2a2 bitcntr_reg_7_ ( .D(N16), .CLK(clk), .CLR(n6), .Q(bit_count[7]) );
+  fd2a2 bitcntr_reg_0_ ( .D(N9), .CLK(clk), .CLR(n6), .Q(bit_count[0]) );
+  fd2c2 frmcntr_reg_2_ ( .D(N20), .CLK(start_frm), .CLR(n4), .QN(n2) );
+  fd2c2 frmcntr_reg_0_ ( .D(n5), .CLK(start_frm), .CLR(n4), .QN(n5) );
+  inv1a1 U29 ( .A(n5), .Y(frame_count[0]) );
+  inv1a1 U30 ( .A(n3), .Y(frame_count[1]) );
+  inv1a1 U31 ( .A(n2), .Y(frame_count[2]) );
+  oa1f1 U32 ( .A(n2), .B(n35), .C(n36), .Y(N20) );
+  oa1f1 U33 ( .A(n31), .B(n30), .C(n29), .Y(N12) );
+  oa1f1 U34 ( .A(n28), .B(n27), .C(n26), .Y(N14) );
+  and2c0 U35 ( .A(n3), .B(frame_count[0]), .Y(n20) );
+  oa4f0 U36 ( .A(frame_count[0]), .B(frame_count[3]), .C(n20), .D(reg_crc[1]), 
+        .Y(n21) );
+  nand2a0 U37 ( .A(frame_count[0]), .B(frame_count[3]), .Y(n22) );
+  ao2i0 U38 ( .A(frame_count[0]), .B(reg_crc[2]), .C(n3), .D(n22), .Y(n23) );
+  ao1d1 U39 ( .A(reg_crc[3]), .B(n20), .C(n23), .Y(n24) );
+  oa4f0 U40 ( .A(n10), .B(reg_crc[0]), .C(frame_count[2]), .D(n24), .Y(n25) );
+  ao1f1 U41 ( .A(frame_count[2]), .B(n21), .C(n25), .Y(N90) );
+  inv1a1 U42 ( .A(reset_all), .Y(n4) );
+  oa1e1 U43 ( .B(st2), .A(start_frm), .C(reset_all), .Y(n6) );
+  mx2a2 U44 ( .D0(data_fas), .D1(crcbit), .S(zero_bit), .Y(N92) );
+  and2c0 U45 ( .A(n2), .B(n35), .Y(n36) );
+  nand2a0 U46 ( .A(frame_count[0]), .B(frame_count[1]), .Y(n35) );
+  inv1a0 U47 ( .A(bit_count[0]), .Y(N9) );
+  nand2a0 U48 ( .A(n26), .B(bit_count[6]), .Y(n33) );
+  and2c0 U49 ( .A(n28), .B(n27), .Y(n26) );
+  nand2a0 U50 ( .A(n29), .B(bit_count[4]), .Y(n28) );
+  and2c0 U51 ( .A(n31), .B(n30), .Y(n29) );
+  nand2a0 U52 ( .A(n32), .B(bit_count[2]), .Y(n31) );
+  inv1a0 U53 ( .A(bit_count[7]), .Y(n34) );
+  inv1a1 U54 ( .A(bit_count[5]), .Y(n27) );
+  nor3c1 U55 ( .A(n5), .B(n2), .C(frame_count[1]), .Y(n10) );
+  inv1a1 U56 ( .A(bit_count[3]), .Y(n30) );
+  inv1a1 U57 ( .A(n1), .Y(frame_count[3]) );
+  inv1a1 U58 ( .A(n6), .Y(zero_bit) );
+  vdd U59 ( .Y(reset_crc4) );
+  and2a2 U60 ( .A(bit_count[1]), .B(bit_count[0]), .Y(n32) );
+  oa1a0 U61 ( .A(n26), .B(bit_count[6]), .C(n33), .Y(N15) );
+  oa1a0 U62 ( .A(n29), .B(bit_count[4]), .C(n28), .Y(N13) );
+  oa1a0 U63 ( .A(n32), .B(bit_count[2]), .C(n31), .Y(N11) );
+  oa1d1 U64 ( .A(bit_count[0]), .B(bit_count[1]), .C(n32), .Y(N10) );
+  mx2d0 U65 ( .D0(bit_count[7]), .D1(n34), .S(n33), .Y(N16) );
+  mx2d0 U66 ( .D0(n5), .D1(frame_count[0]), .S(frame_count[1]), .Y(N19) );
+  mx2d0 U67 ( .D0(n1), .D1(frame_count[3]), .S(n36), .Y(N21) );
+endmodule
+

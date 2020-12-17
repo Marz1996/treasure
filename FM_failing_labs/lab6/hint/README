@@ -1,0 +1,2 @@
+The user modified only the reset signal for the ECO.
+He added another reset port, but must have wired it incorrectly in the netlist.

@@ -1,0 +1,24 @@
+set search_path ". ./rtl ./libs"
+
+#set synopsys_auto_setup true
+
+set hdlin_warn_on_mismatch_message FMR_ELAB-034
+set verification_failing_point_limit 0
+set verification_clock_gate_hold_mode low
+
+set_svf aes_cipher_top.svf
+
+read_verilog -r aes_sbox_reg.v 
+read_verilog -r aes_sbox.v 
+read_verilog -r aes_key_expand_128.v 
+read_verilog -r aes_cipher_top.v
+set_top aes_cipher_top 
+
+read_db -i  tc6a_cbacore.db
+read_ddc -i aes_cipher_top.ddc
+set_top aes_cipher_top
+
+set_constant i:/WORK/aes_cipher_top/test_se 0
+
+verify
+

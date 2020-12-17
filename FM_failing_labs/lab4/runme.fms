@@ -1,0 +1,16 @@
+set search_path ". ./libs ./rtl"
+
+set synopsys_auto_setup true
+
+set_svf crc_insert.svf
+
+read_db tc6a_cbacore.db 
+
+read_vhdl -r "e1_package.vhd dff.vhd crc_4.vhd crc_insert.vhd"
+set_top crc_insert
+
+read_verilog -i  crc_insert.gv
+set_top crc_insert
+
+verify
+

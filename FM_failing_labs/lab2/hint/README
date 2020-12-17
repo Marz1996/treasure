@@ -1,0 +1,4 @@
+If you grep the Verilog RTL source, you will see "synopsys parallel_case full_case" pragmas.
+
+Setup Formality to recognize the pragmas.
+

@@ -1,0 +1,4 @@
+This is a RTL_vs_gate verification.
+
+Fix-up the SVF file to get a successful verification. 
+

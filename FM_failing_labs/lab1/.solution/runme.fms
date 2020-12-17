@@ -1,0 +1,18 @@
+set search_path ". ./rtl ./libs"
+
+set_svf mR4000.svf
+
+read_verilog -r  "   \
+	alu.v            \
+	cntrl.v          \ 
+	register.v       \
+	r4000.v          \
+" 
+set_top r:/WORK/mR4000
+
+read_db -i tc6a_cbacore.db 
+read_verilog -i  mR4000.gates.v 
+set_top i:/WORK/mR4000
+
+verify
+

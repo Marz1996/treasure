@@ -1,0 +1,14 @@
+set search_path ". ./libs ./netlists"
+
+set verification_clock_gate_hold_mode low
+
+read_db slow.db
+
+read_verilog -r  core.netlist1.gv 
+set_top core 
+
+read_verilog -i  core.netlist2.gv 
+set_top core 
+
+verify
+

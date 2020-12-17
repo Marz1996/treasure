@@ -1,0 +1,12 @@
+set search_path ". ./rtl ./libs"
+
+read_db tc6a_cbacore.db
+
+read_verilog -r gray_counter.v
+set_top gray_counter 
+
+read_verilog -i gray_counter.vg
+set_top gray_counter 
+
+verify
+

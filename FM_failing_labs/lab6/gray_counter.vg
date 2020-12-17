@@ -1,0 +1,47 @@
+
+module gray_counter ( clk, global_rst, reset, clear, enable, nxt_bin_count, 
+        bin_count, gray_count );
+  output [2:0] nxt_bin_count;
+  output [2:0] bin_count;
+  output [2:0] gray_count;
+  input clk, global_rst, reset, clear, enable;
+  wire   internal_reset, n1, n2, n22, n23, n24, n25, n26, n27, n28, n29, n30, n31, n32, n33,
+         n34, n35, n36, n37, n38, n39, n40, n41;
+
+// added manual ECO
+  or2a0 manual_eco_u1 ( .A(reset), .B(internal_reset), .Y(global_rst) );
+
+  fd1a2 bin_count_reg_0_ ( .D(n24), .CLK(clk), .Q(bin_count[0]) );
+  fd1a2 bin_count_reg_1_ ( .D(n23), .CLK(clk), .Q(bin_count[1]) );
+  fd1a2 bin_count_reg_2_ ( .D(n22), .CLK(clk), .Q(bin_count[2]) );
+  fd1c2 prsnt_state_reg_0_ ( .D(n27), .CLK(clk), .QN(n2) );
+  fd1c2 prsnt_state_reg_2_ ( .D(n25), .CLK(clk), .QN(n1) );
+  fd1a2 prsnt_state_reg_1_ ( .D(n26), .CLK(clk), .Q(gray_count[1]) );
+  nand2b1 U32 ( .A(clear), .B(n39), .Y(n29) );
+  and2c0 U33 ( .A(enable), .B(internal_reset), .Y(n41) );
+  xa1d1 U34 ( .A(n35), .B(n37), .C(clear), .Y(nxt_bin_count[0]) );
+  ao4a2 U35 ( .A(n39), .B(nxt_bin_count[0]), .C(n41), .D(bin_count[0]), .Y(n24) );
+  ao4a2 U36 ( .A(n39), .B(nxt_bin_count[1]), .C(n41), .D(bin_count[1]), .Y(n23) );
+  nand2a0 U37 ( .A(n39), .B(nxt_bin_count[2]), .Y(n40) );
+  and2c0 U38 ( .A(internal_reset), .B(n37), .Y(n39) );
+  inv1a0 U39 ( .A(enable), .Y(n37) );
+  and2c0 U40 ( .A(gray_count[1]), .B(n33), .Y(n32) );
+  nand2a0 U41 ( .A(enable), .B(n35), .Y(n33) );
+  inv1a0 U42 ( .A(n36), .Y(n31) );
+  inv1a0 U43 ( .A(gray_count[1]), .Y(n30) );
+  inv1a0 U44 ( .A(n1), .Y(gray_count[2]) );
+  inv1a0 U45 ( .A(n2), .Y(gray_count[0]) );
+  ao1f1 U46 ( .A(n34), .B(n1), .C(n40), .Y(n25) );
+  inv1a1 U47 ( .A(n41), .Y(n34) );
+  vdd U48 ( .Y(n38) );
+  mx2d0 U49 ( .D0(n1), .D1(gray_count[2]), .S(n30), .Y(n36) );
+  ao4f0 U50 ( .A(n2), .B(n34), .C(n29), .D(n31), .Y(n27) );
+  mx2d0 U51 ( .D0(gray_count[1]), .D1(n1), .S(gray_count[0]), .Y(n28) );
+  ao4f0 U52 ( .A(n30), .B(n34), .C(n29), .D(n28), .Y(n26) );
+  mx2d0 U53 ( .D0(n2), .D1(gray_count[0]), .S(n31), .Y(n35) );
+  oa2i0 U54 ( .A(n33), .B(n1), .C(clear), .D(n32), .Y(nxt_bin_count[2]) );
+  oa7g0 U55 ( .A(n38), .B(clear), .C(enable), .D(n2), .E(n37), .F(n36), .Y(
+        nxt_bin_count[1]) );
+  ao1d1 U56 ( .A(n41), .B(bin_count[2]), .C(n40), .Y(n22) );
+endmodule
+

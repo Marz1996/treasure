@@ -1,0 +1,4 @@
+You will need to disable scan mode and notify Formality that there are clock-gating latches in the design.
+
+The Auto Setup Mode will do this automatically given information in the SVF.
+

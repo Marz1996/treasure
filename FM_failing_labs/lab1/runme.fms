@@ -1,0 +1,16 @@
+set search_path ". ./rtl ./libs"
+
+set hdlin_unresolved_modules black_box
+
+read_verilog -r  "   \
+	cntrl.v          \ 
+	register.v       \
+	r4000.v          \
+" 
+set_top r:/WORK/mR4000
+
+read_verilog -i  mR4000.gates.v 
+set_top i:/WORK/mR4000
+
+verify
+

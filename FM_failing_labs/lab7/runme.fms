@@ -1,0 +1,20 @@
+read_db ./libs/tc6a_cbacore.db 
+
+read_verilog -r   "  \
+     ./rtl/tv80_alu.v \
+     ./rtl/tv80_core.v \
+     ./rtl/tv80_mcode.v \
+     ./rtl/tv80_reg.v \
+     ./rtl/tv80s.v \
+  "
+set_top tv80s
+
+read_verilog -i tv80s.vg
+set_top tv80s
+
+set signature_analysis_match_compare_points false
+
+match
+
+verify
+

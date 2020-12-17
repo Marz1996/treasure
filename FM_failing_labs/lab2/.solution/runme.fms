@@ -1,0 +1,17 @@
+set search_path ". ./libs ./rtl"
+
+# The Auto Setup Mode will automatically recognize parallel-case and full-case pragmas
+set synopsys_auto_setup true
+
+set_svf default.svf
+
+read_db tc6a_cbacore.db 
+
+read_verilog -r "alu.v cntrl.v r4000.v register.v" 
+set_top mR4000 
+
+read_verilog -i mR4000.gates.v
+set_top mR4000 
+
+verify 
+

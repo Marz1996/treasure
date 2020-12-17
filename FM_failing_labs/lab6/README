@@ -1,0 +1,10 @@
+This is an ECO RTL_vs_gate verification.  There is no SVF file.
+
+The customer changed both the RTL and the gate-level netlist manually without re-running synthesis.
+The new RTL is golden.  However, the netlist can be modified.
+
+A new engineer is trying to verify the design and is having problems.  You need to help him modify 
+the gate-level netlist to correctly implement the ECO.
+
+See "./.hint/README" if you need help.
+

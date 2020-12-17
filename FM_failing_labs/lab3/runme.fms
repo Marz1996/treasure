@@ -1,0 +1,19 @@
+set search_path ". ./rtl ./libs"
+
+set hdlin_warn_on_mismatch_message FMR_ELAB-034
+set verification_failing_point_limit 0
+
+set_svf aes_cipher_top.svf
+
+read_verilog -r aes_sbox_reg.v 
+read_verilog -r aes_sbox.v 
+read_verilog -r aes_key_expand_128.v 
+read_verilog -r aes_cipher_top.v
+set_top aes_cipher_top 
+
+read_db -i  tc6a_cbacore.db
+read_ddc -i aes_cipher_top.ddc
+set_top aes_cipher_top
+
+verify
+

@@ -1,0 +1,38 @@
+# Auto Setup Mode works best here
+# set synopsys_auto_setup true
+
+# There is clock-gating in the design
+set verification_clock_gate_hold_mode low
+
+# Using the SVF file fixes compare point matching problems 
+set_svf ./tv80s.svf
+
+read_db ./libs/tc6a_cbacore.db 
+
+read_verilog -r   "  \
+     ./rtl/tv80_alu.v \
+     ./rtl/tv80_core.v \
+     ./rtl/tv80_mcode.v \
+     ./rtl/tv80_reg.v \
+     ./rtl/tv80s.v \
+  "
+set_top tv80s
+
+read_verilog -i ./tv80s.vg
+set_top tv80s
+
+# You need to disable scan
+set_constant i:/WORK/tv80s/test_se 0
+
+# Signature analysis matching should be turned on. This is the default.
+# set signature_analysis_match_compare_points true
+
+# If you left signature analysis off, you will need to use compare rules instead
+#set_compare_rule $ref -from {i_tv80_core} -to {}
+#set_compare_rule $ref -from {i_reg} -to {}
+#set_compare_rule $impl -from {di_reg_reg} -to {d_reg}
+
+match
+
+verify
+

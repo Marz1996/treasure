@@ -1,0 +1,15 @@
+Look carefully at the warning messages in the transcript:
+
+a.) ...Created black-box design 'mAlu' in library 'FM_BBOX'...  
+This is a design module that is missing in the reference design.
+
+b.) ...Setting top design to 'i:/WORK/mR4000'
+       Warning: Cannot link cell '/WORK/mCntrl/IRWrite_reg' to its reference design 'fd1a2'. (FE-LINK-2)
+       Warning: Cannot link cell '/WORK/mCntrl/TargetWrite_reg' to its reference design 'fdm5a2'. (FE-LINK-2)
+       Warning: Cannot link cell '/WORK/mCntrl/ALUSelA_reg' to its reference design 'fd1a2'. (FE-LINK-2)
+    ...
+The implementation design is missing the component library.
+
+c.) ... Info:  Formality Guide Files (SVF) can improve verification success by automating setup...
+Need to load the SVF file.
+

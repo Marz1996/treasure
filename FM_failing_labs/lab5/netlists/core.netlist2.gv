@@ -1,0 +1,266 @@
+
+module SNPS_CLOCK_GATE_HIGH_datapipe1 ( CLK, EN, ENCLK, TE );
+  input CLK, EN, TE;
+  output ENCLK;
+
+
+  TLATNTSCAX8HS latch1 ( .E(EN), .SE(TE), .CK(CLK), .ECK(ENCLK) );
+endmodule
+
+module SNPS_CLOCK_GATE_HIGH_datapipe2 ( CLK, EN, ENCLK, TE );
+  input CLK, EN, TE;
+  output ENCLK;
+
+
+  TLATNTSCAX8HS latch1 ( .E(EN), .SE(TE), .CK(CLK), .ECK(ENCLK) );
+endmodule
+
+
+
+module datapipe_test_1 ( clk, reset, enable, upper, din, dout, test_si, 
+        test_so, test_se );
+  input [15:0] din;
+  output [15:0] dout;
+  input clk, reset, enable, upper, test_si, test_se;
+  output test_so;
+  wire   N22, N39, N40, N41, N42, N43, N44, N45, N46, N47, N48, N49, N50, N51,
+         N52, N53, net17, net18, n48, n50, n51, n52, n53, n54, n55, n56, n57, n58,
+         n59, n60, n61, n62, n63, n64, n65, n1, n2, n3, n4, n5, n6, n7, n8, n9,
+         n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21, n22, n23,
+         n24, n25, n26, n27, n28, n29, n30, n31, n32, n33, n34, n35, n36, n37,
+         n38, n39, n40, n41, n42, n43, n44;
+  wire   [15:1] stage2;
+  wire   [15:0] stage1;
+
+  SNPS_CLOCK_GATE_HIGH_datapipe1 clk_gate_stage1_reg1 ( .CLK(clk), .EN(enable), 
+        .ENCLK(net17), .TE(test_se) );
+  SNPS_CLOCK_GATE_HIGH_datapipe2 clk_gate_stage1_reg2 ( .CLK(clk), .EN(enable), 
+        .ENCLK(net18), .TE(test_se) );
+  SDFFRHQX1HS dout_reg_15_ ( .D(N53), .SI(dout[14]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[15]) );
+  SDFFRHQX1HS dout_reg_14_ ( .D(N52), .SI(dout[13]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[14]) );
+  SDFFRHQX1HS dout_reg_13_ ( .D(N51), .SI(dout[12]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[13]) );
+  SDFFRHQX1HS dout_reg_12_ ( .D(N50), .SI(dout[11]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[12]) );
+  SDFFRHQX1HS dout_reg_11_ ( .D(N49), .SI(dout[10]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[11]) );
+  SDFFRHQX1HS dout_reg_10_ ( .D(N48), .SI(dout[9]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[10]) );
+  SDFFRHQX1HS dout_reg_9_ ( .D(N47), .SI(dout[8]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[9]) );
+  SDFFRHQX1HS dout_reg_8_ ( .D(N46), .SI(dout[7]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[8]) );
+  SDFFRHQX1HS dout_reg_7_ ( .D(N45), .SI(dout[6]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[7]) );
+  SDFFRHQX1HS dout_reg_6_ ( .D(N44), .SI(dout[5]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[6]) );
+  SDFFRHQX1HS dout_reg_5_ ( .D(N43), .SI(dout[4]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[5]) );
+  SDFFRHQX1HS dout_reg_4_ ( .D(N42), .SI(dout[3]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[4]) );
+  SDFFRHQX1HS dout_reg_3_ ( .D(N41), .SI(dout[2]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[3]) );
+  SDFFRHQX1HS dout_reg_2_ ( .D(N40), .SI(dout[1]), .SE(test_se), .CK(net18), 
+        .RN(n48), .Q(dout[2]) );
+  SDFFRHQX1HS dout_reg_1_ ( .D(N39), .SI(dout[0]), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[1]) );
+  SDFFRHQX1HS stage1_reg_15_ ( .D(din[15]), .SI(stage1[14]), .SE(test_se), 
+        .CK(net17), .RN(n48), .Q(stage1[15]) );
+  SDFFRHQX1HS stage1_reg_14_ ( .D(din[14]), .SI(stage1[13]), .SE(test_se), 
+        .CK(net17), .RN(n48), .Q(stage1[14]) );
+  SDFFRHQX1HS dout_reg_0_ ( .D(N22), .SI(test_si), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(dout[0]) );
+  SDFFRHQX1HS stage2_reg_15_ ( .D(n50), .SI(stage2[14]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage2[15]) );
+  SDFFRHQX1HS stage2_reg_0_ ( .D(n65), .SI(stage1[15]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(N22) );
+  SDFFRHQX1HS stage2_reg_13_ ( .D(n52), .SI(stage2[12]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage2[13]) );
+  SDFFRHQX1HS stage2_reg_14_ ( .D(n51), .SI(stage2[13]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage2[14]) );
+  SDFFRHQX1HS stage1_reg_13_ ( .D(din[13]), .SI(stage1[12]), .SE(test_se), 
+        .CK(net18), .RN(n48), .Q(stage1[13]) );
+  SDFFRHQX1HS stage1_reg_12_ ( .D(din[12]), .SI(stage1[11]), .SE(test_se), 
+        .CK(net18), .RN(n48), .Q(stage1[12]) );
+  SDFFRHQX1HS stage2_reg_11_ ( .D(n54), .SI(stage2[10]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage2[11]) );
+  SDFFRHQX1HS stage2_reg_12_ ( .D(n53), .SI(stage2[11]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage2[12]) );
+  SDFFRHQX1HS stage1_reg_11_ ( .D(din[11]), .SI(stage1[10]), .SE(test_se), 
+        .CK(net17), .RN(n48), .Q(stage1[11]) );
+  SDFFRHQX1HS stage1_reg_10_ ( .D(din[10]), .SI(stage1[9]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[10]) );
+  SDFFRHQX1HS stage2_reg_9_ ( .D(n56), .SI(stage2[8]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[9]) );
+  SDFFRHQX1HS stage2_reg_10_ ( .D(n55), .SI(stage2[9]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage2[10]) );
+  SDFFRHQX1HS stage1_reg_9_ ( .D(din[9]), .SI(stage1[8]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[9]) );
+  SDFFRHQX1HS stage1_reg_8_ ( .D(din[8]), .SI(stage1[7]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[8]) );
+  SDFFRHQX1HS stage2_reg_7_ ( .D(n58), .SI(stage2[6]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[7]) );
+  SDFFRHQX1HS stage2_reg_8_ ( .D(n57), .SI(stage2[7]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[8]) );
+  SDFFRHQX1HS stage1_reg_7_ ( .D(din[7]), .SI(stage1[6]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[7]) );
+  SDFFRHQX1HS stage1_reg_6_ ( .D(din[6]), .SI(stage1[5]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[6]) );
+  SDFFRHQX1HS stage2_reg_5_ ( .D(n60), .SI(stage2[4]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[5]) );
+  SDFFRHQX1HS stage2_reg_6_ ( .D(n59), .SI(stage2[5]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[6]) );
+  SDFFRHQX1HS stage1_reg_5_ ( .D(din[5]), .SI(stage1[4]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[5]) );
+  SDFFRHQX1HS stage1_reg_3_ ( .D(din[3]), .SI(stage1[2]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[3]) );
+  SDFFRHQX1HS stage1_reg_4_ ( .D(din[4]), .SI(stage1[3]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[4]) );
+  SDFFRHQX1HS stage1_reg_1_ ( .D(din[1]), .SI(stage1[0]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[1]) );
+  SDFFRHQX1HS stage1_reg_0_ ( .D(din[0]), .SI(dout[15]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[0]) );
+  SDFFRHQX1HS stage2_reg_1_ ( .D(n64), .SI(N22), .SE(test_se), .CK(net17), 
+        .RN(n48), .Q(stage2[1]) );
+  SDFFRHQX1HS stage2_reg_2_ ( .D(n63), .SI(stage2[1]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[2]) );
+  SDFFRHQX1HS stage2_reg_3_ ( .D(n62), .SI(stage2[2]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[3]) );
+  SDFFRHQX1HS stage2_reg_4_ ( .D(n61), .SI(stage2[3]), .SE(test_se), .CK(net17), .RN(n48), .Q(stage2[4]) );
+  SDFFRHQX1HS stage1_reg_2_ ( .D(din[2]), .SI(stage1[1]), .SE(test_se), .CK(
+        net17), .RN(n48), .Q(stage1[2]) );
+  INVX2HS U2 ( .A(n9), .Y(n11) );
+  AOI222X2HS U3 ( .A0(stage1[3]), .A1(stage2[4]), .B0(stage1[3]), .B1(n11), 
+        .C0(stage2[4]), .C1(n11), .Y(n12) );
+  INVX2HS U4 ( .A(n12), .Y(n14) );
+  OAI222X2HS U5 ( .A0(n14), .A1(stage1[4]), .B0(n14), .B1(stage2[5]), .C0(
+        stage1[4]), .C1(stage2[5]), .Y(n15) );
+  INVX2HS U6 ( .A(n15), .Y(n17) );
+  AOI222X2HS U7 ( .A0(stage1[5]), .A1(stage2[6]), .B0(stage1[5]), .B1(n17), 
+        .C0(stage2[6]), .C1(n17), .Y(n18) );
+  INVX2HS U8 ( .A(n18), .Y(n20) );
+  OAI222X2HS U9 ( .A0(n20), .A1(stage1[6]), .B0(n20), .B1(stage2[7]), .C0(
+        stage1[6]), .C1(stage2[7]), .Y(n21) );
+  INVX2HS U10 ( .A(n21), .Y(n23) );
+  AOI222X2HS U11 ( .A0(stage1[7]), .A1(stage2[8]), .B0(stage1[7]), .B1(n23), 
+        .C0(stage2[8]), .C1(n23), .Y(n24) );
+  INVX2HS U12 ( .A(n24), .Y(n26) );
+  OAI222X2HS U13 ( .A0(n26), .A1(stage1[8]), .B0(n26), .B1(stage2[9]), .C0(
+        stage1[8]), .C1(stage2[9]), .Y(n27) );
+  INVX2HS U14 ( .A(n27), .Y(n29) );
+  AOI222X2HS U15 ( .A0(stage1[9]), .A1(stage2[10]), .B0(stage1[9]), .B1(n29), 
+        .C0(stage2[10]), .C1(n29), .Y(n30) );
+  INVX2HS U16 ( .A(n30), .Y(n32) );
+  OAI222X2HS U17 ( .A0(n32), .A1(stage1[10]), .B0(n32), .B1(stage2[11]), .C0(
+        stage1[10]), .C1(stage2[11]), .Y(n33) );
+  INVX2HS U18 ( .A(n33), .Y(n35) );
+  AOI222X2HS U19 ( .A0(stage1[11]), .A1(stage2[12]), .B0(stage1[11]), .B1(n35), 
+        .C0(stage2[12]), .C1(n35), .Y(n36) );
+  INVX2HS U20 ( .A(n36), .Y(n38) );
+  AOI222X2HS U21 ( .A0(stage1[13]), .A1(stage2[14]), .B0(stage1[13]), .B1(n41), 
+        .C0(stage2[14]), .C1(n41), .Y(n43) );
+  OAI222X2HS U22 ( .A0(n38), .A1(stage1[12]), .B0(n38), .B1(stage2[13]), .C0(
+        stage1[12]), .C1(stage2[13]), .Y(n39) );
+  OAI222X2HS U23 ( .A0(n8), .A1(stage1[2]), .B0(n8), .B1(stage2[3]), .C0(
+        stage1[2]), .C1(stage2[3]), .Y(n9) );
+  NOR2X1HS U24 ( .A(upper), .B(n65), .Y(n1) );
+  NAND2X1HS U25 ( .A(n64), .B(n2), .Y(n5) );
+  CLKINVX2HS U26 ( .A(stage1[14]), .Y(n51) );
+  INVX1HS U27 ( .A(stage1[3]), .Y(n62) );
+  INVX1HS U28 ( .A(stage1[0]), .Y(n65) );
+  INVX1HS U29 ( .A(stage1[4]), .Y(n61) );
+  INVX1HS U30 ( .A(stage1[13]), .Y(n52) );
+  INVX1HS U31 ( .A(stage1[2]), .Y(n63) );
+  INVX2HS U32 ( .A(stage1[1]), .Y(n64) );
+  OAI21X1HS U33 ( .A0(n51), .A1(n43), .B0(n42), .Y(n44) );
+  AOI21X1HS U34 ( .A0(n51), .A1(n43), .B0(upper), .Y(n42) );
+  AOI21X2HS U35 ( .A0(stage2[2]), .A1(n5), .B0(n4), .Y(n6) );
+  INVX2HS U36 ( .A(reset), .Y(n48) );
+  AOI221X1HS U37 ( .A0(stage1[2]), .A1(n8), .B0(n63), .B1(n6), .C0(upper), .Y(
+        n7) );
+  AOI221X1HS U38 ( .A0(stage1[3]), .A1(n11), .B0(n62), .B1(n9), .C0(upper), 
+        .Y(n10) );
+  AOI221X1HS U39 ( .A0(stage1[5]), .A1(n17), .B0(n60), .B1(n15), .C0(upper), 
+        .Y(n16) );
+  AOI221X1HS U40 ( .A0(stage1[7]), .A1(n23), .B0(n58), .B1(n21), .C0(upper), 
+        .Y(n22) );
+  AOI221X1HS U41 ( .A0(stage1[9]), .A1(n29), .B0(n56), .B1(n27), .C0(upper), 
+        .Y(n28) );
+  AOI221X1HS U42 ( .A0(stage1[11]), .A1(n35), .B0(n54), .B1(n33), .C0(upper), 
+        .Y(n34) );
+  AOI221X1HS U43 ( .A0(stage1[13]), .A1(n41), .B0(n52), .B1(n39), .C0(upper), 
+        .Y(n40) );
+  INVX2HS U44 ( .A(n39), .Y(n41) );
+  INVX2HS U45 ( .A(n6), .Y(n8) );
+  NOR2X2HS U46 ( .A(n64), .B(n2), .Y(n4) );
+  XOR2X1HS U47 ( .A(n1), .B(stage2[1]), .Y(N39) );
+  NAND2X1HS U48 ( .A(stage1[0]), .B(stage2[1]), .Y(n2) );
+  NOR3BX1HS U49 ( .AN(n5), .B(upper), .C(n4), .Y(n3) );
+  XOR2X1HS U50 ( .A(stage2[2]), .B(n3), .Y(N40) );
+  XOR2X1HS U51 ( .A(n7), .B(stage2[3]), .Y(N41) );
+  XOR2X1HS U52 ( .A(stage2[4]), .B(n10), .Y(N42) );
+  AOI221X1HS U53 ( .A0(stage1[4]), .A1(n14), .B0(n61), .B1(n12), .C0(upper), 
+        .Y(n13) );
+  XOR2X1HS U54 ( .A(n13), .B(stage2[5]), .Y(N43) );
+  CLKINVX1HS U55 ( .A(stage1[5]), .Y(n60) );
+  XOR2X1HS U56 ( .A(stage2[6]), .B(n16), .Y(N44) );
+  CLKINVX1HS U57 ( .A(stage1[6]), .Y(n59) );
+  AOI221X1HS U58 ( .A0(stage1[6]), .A1(n20), .B0(n59), .B1(n18), .C0(upper), 
+        .Y(n19) );
+  XOR2X1HS U59 ( .A(n19), .B(stage2[7]), .Y(N45) );
+  CLKINVX1HS U60 ( .A(stage1[7]), .Y(n58) );
+  XOR2X1HS U61 ( .A(stage2[8]), .B(n22), .Y(N46) );
+  CLKINVX1HS U62 ( .A(stage1[8]), .Y(n57) );
+  AOI221X1HS U63 ( .A0(stage1[8]), .A1(n26), .B0(n57), .B1(n24), .C0(upper), 
+        .Y(n25) );
+  XOR2X1HS U64 ( .A(n25), .B(stage2[9]), .Y(N47) );
+  CLKINVX1HS U65 ( .A(stage1[9]), .Y(n56) );
+  XOR2X1HS U66 ( .A(stage2[10]), .B(n28), .Y(N48) );
+  CLKINVX1HS U67 ( .A(stage1[10]), .Y(n55) );
+  AOI221X1HS U68 ( .A0(stage1[10]), .A1(n32), .B0(n55), .B1(n30), .C0(upper), 
+        .Y(n31) );
+  XOR2X1HS U69 ( .A(n31), .B(stage2[11]), .Y(N49) );
+  CLKINVX1HS U70 ( .A(stage1[11]), .Y(n54) );
+  XOR2X1HS U71 ( .A(stage2[12]), .B(n34), .Y(N50) );
+  CLKINVX1HS U72 ( .A(stage1[12]), .Y(n53) );
+  AOI221X1HS U73 ( .A0(stage1[12]), .A1(n38), .B0(n53), .B1(n36), .C0(upper), 
+        .Y(n37) );
+  XOR2X1HS U74 ( .A(n37), .B(stage2[13]), .Y(N51) );
+  XOR2X1HS U75 ( .A(stage2[14]), .B(n40), .Y(N52) );
+  XNOR2X1HS U76 ( .A(stage2[15]), .B(n44), .Y(N53) );
+  CLKINVX1HS U77 ( .A(stage1[15]), .Y(n50) );
+  TLATNX8HS LOCKUP ( .D(stage2[15]), .GN(net18), .Q(test_so) );
+endmodule
+
+
+module control_test_1 ( clk, reset, start, stop, enable, test_si, test_so, 
+        test_se );
+  input clk, reset, start, stop, test_si, test_se;
+  output enable, test_so;
+  wire   next_state_0_, n2, n1;
+  wire   [1:0] state;
+
+  SDFFRHQX1HS state_reg_0_ ( .D(next_state_0_), .SI(test_si), .SE(test_se), 
+        .CK(clk), .RN(n2), .Q(state[0]) );
+  SDFFRHQX1HS state_reg_1_ ( .D(enable), .SI(state[0]), .SE(test_se), .CK(clk), 
+        .RN(n2), .Q(state[1]) );
+  INVX2HS U3 ( .A(reset), .Y(n2) );
+  XOR2X1HS U4 ( .A(state[0]), .B(state[1]), .Y(enable) );
+  AOI2B2X1HS U5 ( .B0(state[1]), .B1(stop), .A1N(state[1]), .A0(start), .Y(n1)
+         );
+  NOR2X1HS U6 ( .A(state[0]), .B(n1), .Y(next_state_0_) );
+  TLATNX8HS LOCKUP ( .D(state[1]), .GN(clk), .Q(test_so) );
+endmodule
+
+
+module core ( clk1, clk2, reset, start, upper, din, dout, scan_enable, 
+        test_si1, test_so1, test_si2, test_so2 );
+  input [15:0] din;
+  output [15:0] dout;
+  input clk1, clk2, reset, start, upper, scan_enable, test_si1, test_si2;
+  output test_so1, test_so2;
+  wire   enable;
+
+  datapipe_test_1 u1 ( .clk(clk1), .reset(reset), .enable(enable), .upper(
+        upper), .din(din), .dout(dout), .test_si(test_si1), .test_so(test_so1), 
+        .test_se(scan_enable) );
+  control_test_1 u2 ( .clk(clk2), .reset(reset), .start(start), .stop(dout[0]), 
+        .enable(enable), .test_si(test_si2), .test_so(test_so2), .test_se(
+        scan_enable) );
+endmodule
+

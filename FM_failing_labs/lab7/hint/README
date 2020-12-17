@@ -1,0 +1,10 @@
+There are multiple setup problems with this testcase.
+
+a.) clock-gating - need to setup Formality
+
+b.) scan insertion - need to disable
+
+c.) compare point matching issues - compare rules, signature analysis, or SVF
+ 
+If you need additional help, a correct solution is available under ".solution/runme.fms".
+

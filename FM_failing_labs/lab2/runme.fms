@@ -1,0 +1,18 @@
+set search_path ". ./libs ./rtl"
+
+set hdlin_warn_on_mismatch_message "FMR_ELAB-115 FMR_ELAB-116"
+
+set_svf default.svf
+
+read_db tc6a_cbacore.db 
+
+read_verilog -r "alu.v cntrl.v r4000.v register.v" 
+set_top mR4000 
+
+read_verilog -i mR4000.gates.v
+set_top mR4000 
+
+set verification_failing_point_limit 0
+
+verify 
+
